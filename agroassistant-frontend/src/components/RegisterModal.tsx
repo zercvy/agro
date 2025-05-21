@@ -11,6 +11,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [rePassword, setRePassword] = useState('')
+  const [showPasswords, setShowPasswords] = useState(false)
   const [emailSent, setEmailSent] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -44,22 +45,33 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
           className="w-full border p-2 rounded"
           required
         />
+
         <input
-          type="password"
+          type={showPasswords ? 'text' : 'password'}
           placeholder="Пароль"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full border p-2 rounded"
           required
         />
+
         <input
-          type="password"
+          type={showPasswords ? 'text' : 'password'}
           placeholder="Подтверждение пароля"
           value={rePassword}
           onChange={(e) => setRePassword(e.target.value)}
           className="w-full border p-2 rounded"
           required
         />
+
+        <label className="text-sm flex items-center space-x-2 mt-1">
+          <input
+            type="checkbox"
+            checked={showPasswords}
+            onChange={() => setShowPasswords(!showPasswords)}
+          />
+          <span>Показать пароли</span>
+        </label>
 
         <div className="bg-gray-100 border rounded p-3 text-center text-sm text-gray-600">
           🛡 Подтверждение email будет отправлено на почту

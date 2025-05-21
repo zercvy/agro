@@ -23,7 +23,7 @@ urlpatterns = [
     path('api/', include('plots.urls')),        # <- наш plots API
     path('api/auth/', include('djoser.urls')),  # регистрация и пользователи
     path('api/auth/', include('djoser.urls.authtoken')),
-    
+    path('api/auth/', include('users.urls')),
 ]
 
 

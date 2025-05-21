@@ -51,7 +51,15 @@ INSTALLED_APPS = [
     # 'cultures',
 ]
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # или smtp.gmail.com
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'anatolij.nesterov2004@gmail.com'
+EMAIL_HOST_PASSWORD = 'zbcg wgxx dpbi sqeg'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # обязательно до CommonMiddleware
     'django.middleware.common.CommonMiddleware',

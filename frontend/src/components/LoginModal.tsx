@@ -1,39 +1,55 @@
-import React, { FormEvent, useState } from 'react'
-import Modal from './Modal'
-import API, { setAuthToken } from "@/api/axios";
+
+
+
+import React, { FormEvent, useState } from 'react';
+import Modal from './Modal';
+import API, { setAuthToken } from '@/api/axios';
+import Cookies from 'js-cookie';
 
 interface LoginModalProps {
-  isOpen: boolean
-  onClose: () => void
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-    const handleLogin = async (e: FormEvent) => {
-    e.preventDefault()
-    setError(null)
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
+    setError(null);
 
     try {
+      // 1. Получить CSRF-cookie
+      await API.get('/sanctum/csrf-cookie');
+
+      // 2. Установить X-XSRF-TOKEN заголовок вручную
+      const token = Cookies.get('XSRF-TOKEN');
+      if (token) {
+        API.defaults.headers.common['X-XSRF-TOKEN'] = decodeURIComponent(token);
+      }
+
+      // 3. Отправить вход
       const res = await API.post('/login', {
         email,
-        password
-      })
+        password,
+      });
 
-      const token = res.data.token
-      localStorage.setItem('token', token)
-      setAuthToken(token)
+      // 4. Сохранить токен (если Laravel API возвращает его)
+      const accessToken = res.data?.token;
+      if (accessToken) {
+        localStorage.setItem('token', accessToken);
+        setAuthToken(accessToken);
+      }
 
-      onClose()
+      onClose();
     } catch (err: any) {
-      setError('Неверный email или пароль')
-      console.error(err.response?.data || err.message)
+      setError('Неверный email или пароль');
+      console.error(err.response?.data || err.message);
     }
-  }
-
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -70,12 +86,15 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
 
         {error && <p className="text-red-600 text-sm">{error}</p>}
 
-        <button type="submit" className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">
+        <button
+          type="submit"
+          className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
+        >
           Войти
         </button>
       </form>
     </Modal>
-  )
-}
+  );
+};
 
-export default LoginModal
+export default LoginModal;

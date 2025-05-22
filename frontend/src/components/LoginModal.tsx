@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react'
 import Modal from './Modal'
-import API, { setAuthToken } from '../api/axios'
+import API, { setAuthToken } from "@/api/axios";
 
 interface LoginModalProps {
   isOpen: boolean
@@ -13,21 +13,27 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleLogin = async (e: FormEvent) => {
+    const handleLogin = async (e: FormEvent) => {
     e.preventDefault()
     setError(null)
 
     try {
-      const res = await API.post('/auth/token/login/', { email, password })
-      const token = res.data.auth_token
+      const res = await API.post('/login', {
+        email,
+        password
+      })
+
+      const token = res.data.token
       localStorage.setItem('token', token)
       setAuthToken(token)
+
       onClose()
     } catch (err: any) {
       setError('Неверный email или пароль')
       console.error(err.response?.data || err.message)
     }
   }
+
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

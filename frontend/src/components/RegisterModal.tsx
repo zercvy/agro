@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react'
 import Modal from './Modal'
-import API from '../api/axios'
+import API, { setAuthToken } from "@/api/axios";
 
 interface RegisterModalProps {
   isOpen: boolean
@@ -20,17 +20,19 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     setError(null)
 
     try {
-      await API.post('/auth/users/', {
+      await API.post('/register', {
+        name: email.split('@')[0], // Laravel требует name, можно временно взять из email
         email,
         password,
-        re_password: rePassword,
+        password_confirmation: rePassword,
       })
       setEmailSent(true)
     } catch (err: any) {
-      setError('Ошибка регистрации. Проверьте данные.')
+      setError('Ошибка регистрации. Проверьте поля.')
       console.error(err.response?.data || err.message)
     }
   }
+
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

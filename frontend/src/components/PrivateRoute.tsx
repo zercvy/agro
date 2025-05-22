@@ -1,14 +1,18 @@
-import React from 'react'
-import { Navigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import API from '../api/axios';
 
-interface PrivateRouteProps {
-  children: React.ReactNode
-}
+const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [auth, setAuth] = useState<'loading' | 'ok' | 'fail'>('loading');
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  const token = localStorage.getItem('token')
+  useEffect(() => {
+    API.get('/me')
+      .then(() => setAuth('ok'))
+      .catch(() => setAuth('fail'));
+  }, []);
 
-  return token ? <>{children}</> : <Navigate to="/" replace />
-}
+  if (auth === 'loading') return <div>Загрузка...</div>;
+  return auth === 'ok' ? <>{children}</> : <Navigate to="/" />;
+};
 
-export default PrivateRoute
+export default PrivateRoute;

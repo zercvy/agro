@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: agro_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: agro_db
+      MYSQL_USER: agro_user
+      MYSQL_PASSWORD: agro_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  backend:
+    build: ./backend
+    container_name: agro_backend
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: mysql
+      DB_USER: agro_user
+      DB_PASSWORD: agro_pass
+      DB_NAME: agro_db
+      JWT_SECRET: supersecretkey
+      JWT_EXPIRES_IN: 1d
+      COOKIE_NAME: token
+      PORT: 5000
+    depends_on:
+      - mysql
+    volumes:
+      - ./backend:/app
+    working_dir: /app
+    command: npm run dev
+
+volumes:
+  mysql-data:

@@ -1,23 +1,36 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
-import App from './App'
-import './index.css'
+// import React from 'react'
+// import ReactDOM from 'react-dom/client'
+// import { BrowserRouter } from 'react-router-dom'
+// import App from './App'
+// import './index.css'
 
 
 
+// const rootElement = document.getElementById('root')
 
-// 👉 восстановление токена при загрузке
-const token = localStorage.getItem('token')
-if (token) setAuthToken(token)
-const rootElement = document.getElementById('root')
+// if (rootElement) {
+//   ReactDOM.createRoot(rootElement).render(
+//     <React.StrictMode>
+//       <BrowserRouter>
+//         <App />
+//       </BrowserRouter>
+//     </React.StrictMode>
+//   )
+// }
 
-if (rootElement) {
-  ReactDOM.createRoot(rootElement).render(
-    <React.StrictMode>
-      <BrowserRouter>
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+import './index.css';
+import { AuthProvider } from './context/AuthContext';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <BrowserRouter>
+      <AuthProvider>
         <App />
-      </BrowserRouter>
-    </React.StrictMode>
-  )
-}
+      </AuthProvider>
+    </BrowserRouter>
+  </React.StrictMode>
+);

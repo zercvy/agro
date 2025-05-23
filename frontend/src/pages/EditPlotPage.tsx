@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import API from '../api/axios';
-import PlotForm from '../components/PlotForm'; // доработанный PlotForm принимает начальные значения и режим
+import PlotForm from '../components/PlotForm'; 
 
 const EditPlotPage: React.FC = () => {
   const { id } = useParams();

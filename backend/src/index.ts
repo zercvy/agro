@@ -4,7 +4,8 @@ import cookieParser from 'cookie-parser';
 import csrf from 'csurf';
 import authRoutes from './routes/authRoutes';
 import plotRoutes from './routes/plotRoutes';
-
+import windowsillRoutes from './routes/windowsillRoutes'
+import potPlantRoutes from './routes/potPlantRoutes'
 dotenv.config();
 
 const app = express();
@@ -36,6 +37,9 @@ app.use('/api/login', csrfProtection);
 app.use('/api/logout', csrfProtection);
 app.use('/api', plotRoutes);
 app.use('/api', authRoutes);
+app.use('/api/windowsills', windowsillRoutes)
+app.use('/api/pots', potPlantRoutes)
+
 
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);

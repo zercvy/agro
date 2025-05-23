@@ -1,16 +1,4 @@
-// import { Router } from 'express';
-// import { createPlot, getUserPlots, getPlotById, deletePlot} from '../controllers/plotController';
-// import { authMiddleware } from '../middleware/authMiddleware';
-// // import { getAllPlots, getPlotById, createPlot, updatePlot, deletePlot } from '../controllers/plotController';
 
-// const router = Router();
-
-// router.post('/plots', authMiddleware, createPlot);
-// router.get('/plots', authMiddleware, getUserPlots);
-// router.get('/plots/:id', authMiddleware, getPlotById);
-// router.delete('/plots/:id', authMiddleware, deletePlot);
-
-// export default router;
 import { Router } from 'express';
 import {
   createPlot,

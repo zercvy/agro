@@ -10,9 +10,9 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(express.json());
-app.use(cookieParser());
-app.use('/api', plotRoutes);
+
+
+
 const csrfProtection = csrf({
   cookie: {
     httpOnly: true,
@@ -21,6 +21,10 @@ const csrfProtection = csrf({
   }
 });
 
+
+app.use(express.json());
+app.use(cookieParser());
+app.use('/api/plots', csrfProtection);
 // 🔹 Специальный маршрут только для получения токена
 app.get('/api/csrf-token', csrfProtection, (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
@@ -30,7 +34,7 @@ app.get('/api/csrf-token', csrfProtection, (req, res) => {
 app.use('/api/register', csrfProtection);
 app.use('/api/login', csrfProtection);
 app.use('/api/logout', csrfProtection);
-
+app.use('/api', plotRoutes);
 app.use('/api', authRoutes);
 
 app.listen(port, () => {

@@ -14,7 +14,7 @@ import FertilizerPage from './pages/FertilizerPage'
 import AnalyticsPage from './pages/AnalyticsPage'
 import PlotListPage from './pages/PlotListPage'
 import PlotDetailsPage from './pages/PlotDetailsPage'
-
+import EditPlotPage from './pages/EditPlotPage';
 import PrivateRoute from './components/PrivateRoute'
 
 const App: React.FC = () => {
@@ -29,6 +29,7 @@ const App: React.FC = () => {
       <Route path="/plots/:id" element={<PrivateRoute><PlotDetailsPage /></PrivateRoute>} />
       <Route path="/analytics" element={<PrivateRoute><AnalyticsPage /></PrivateRoute>} />
       <Route path="/windowsills" element={<PrivateRoute><WindowsillPage /></PrivateRoute>} />
+      <Route path="/plots/edit/:id" element={<PrivateRoute><EditPlotPage /></PrivateRoute>} />
 
       {/* 🟢 Открытые маршруты */}
       <Route path="/calendar" element={<CalendarPage />} />

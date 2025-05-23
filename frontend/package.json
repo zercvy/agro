@@ -10,10 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@turf/turf": "^7.2.0",
     "axios": "^1.9.0",
     "js-cookie": "^3.0.5",
+    "leaflet": "^1.9.4",
+    "leaflet-draw": "^1.0.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.6.0",
     "recharts": "^2.15.3"
   },

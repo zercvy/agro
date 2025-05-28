@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import WeatherMapModal from './WeatherMapModal';
+import WeatherChart from './WeatherChart';
+import SunAzimuth from './SunAzimuth';
+
 
 interface WeatherData {
   temperature: number;
@@ -17,7 +20,43 @@ interface WeatherData {
   location: string;
   azimuth: number;
   timezone: string;
+  hourlyData: {
+    hour: string;
+    temperature: number;
+  }[];
 }
+
+// 🔁 Интерполяция температуры каждые 2 минуты
+const interpolateHourlyTo2Min = (
+  data: { hour: string; temperature: number }[]
+): { time: string; temperature: number }[] => {
+  const result: { time: string; temperature: number }[] = [];
+
+  for (let i = 0; i < data.length - 1; i++) {
+    const t1 = data[i];
+    const t2 = data[i + 1];
+
+    const h1 = parseInt(t1.hour.split(':')[0]);
+    const h2 = parseInt(t2.hour.split(':')[0]);
+
+    const totalMinutes = (h2 - h1) * 60;
+    for (let m = 0; m <= totalMinutes; m += 2) {
+      const ratio = m / totalMinutes;
+      const interpolatedTemp =
+        t1.temperature + (t2.temperature - t1.temperature) * ratio;
+
+      const time = new Date();
+      time.setHours(h1);
+      time.setMinutes(m);
+      result.push({
+        time: time.toTimeString().slice(0, 5),
+        temperature: parseFloat(interpolatedTemp.toFixed(2)),
+      });
+    }
+  }
+
+  return result;
+};
 
 const WeatherBlock: React.FC = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -25,6 +64,7 @@ const WeatherBlock: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [geoError, setGeoError] = useState<string | null>(null);
   const [isMapOpen, setIsMapOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
@@ -34,7 +74,7 @@ const WeatherBlock: React.FC = () => {
         setCoords({ lat, lon });
         fetchWeather(lat, lon);
       },
-      (err) => {
+      () => {
         setGeoError('Не удалось получить геолокацию.');
         setLoading(false);
       }
@@ -113,7 +153,6 @@ const WeatherBlock: React.FC = () => {
             🕓 {weather.timezone} — 📍 {weather.latitude.toFixed(4)}, {weather.longitude.toFixed(4)}
           </div>
 
-
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div>🌡 Температура: <strong>{Math.round(weather.temperature)}°C</strong></div>
             <div>🌬 Ветер: <strong>{weather.wind} м/с</strong></div>
@@ -136,7 +175,33 @@ const WeatherBlock: React.FC = () => {
             <p className="mt-4 text-green-600">✅ Погодных угроз для растений не выявлено.</p>
           )}
 
-          <button className="mt-3 text-green-600 underline">Подробнее о погоде</button>
+          <button
+            className="mt-3 text-green-600 underline"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded ? 'Скрыть подробности' : 'Подробнее о погоде'}
+          </button>
+
+          {isExpanded && weather.hourlyData && (
+            <div className="mt-4 border-t pt-4 space-y-6">
+              <div>
+                <h3 className="text-lg font-semibold mb-2">📈 Температура по часам</h3>
+                <WeatherChart
+                  data={weather.hourlyData.map(({ hour, temperature }) => ({
+                    time: hour,
+                    temperature
+                  }))}
+                />
+              </div>
+
+              <div>
+                <h3 className="text-lg font-semibold mb-2">🧭 Визуализация азимута солнца</h3>
+                <SunAzimuth azimuth={weather.azimuth} />
+              </div>
+            </div>
+          )}
+
+
 
           <WeatherMapModal
             isOpen={isMapOpen}

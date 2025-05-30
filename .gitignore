@@ -37,8 +37,8 @@ frontend/.cache/
 frontend/node_modules/.vite/
 frontend/node_modules/vite/deps/_metadata.json
 
-# === MySQL init dump (если временное) ===
-mysql-init/*.sql
+# # === MySQL init dump (если временное) ===
+# mysql-init/*.sql
 
 # === Misc ===
 *.swp

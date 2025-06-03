@@ -9,18 +9,6 @@ const COOKIE_NAME = process.env.COOKIE_NAME!;
 const JWT_SECRET = process.env.JWT_SECRET!;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN!;
 
-// export const register = async (req: Request, res: Response) => {
-//   const { name, email, password } = req.body;
-
-//   const [users] = await db.query('SELECT id FROM users WHERE email = ?', [email]);
-//   if ((users as any[]).length > 0) return res.status(400).json({ message: 'Email уже используется' });
-
-//   const hashedPassword = await bcrypt.hash(password, 10);
-//   await db.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, hashedPassword]);
-
-//   res.status(201).json({ message: 'Пользователь зарегистрирован' });
-// };
-
 export const register = async (req: Request, res: Response) => {
   const { name, email, password, captchaToken } = req.body;
 

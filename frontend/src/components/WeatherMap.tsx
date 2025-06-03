@@ -36,10 +36,10 @@ const WeatherMap: React.FC<Props> = ({ lat, lon, onChange }) => {
   }, [lat, lon]);
 
   return (
-    <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
+    <MapContainer center={position} zoom={13} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }} attributionControl={false}>
       <TileLayer
-        attribution='&copy; OpenStreetMap contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+         attribution="© OpenStreetMap contributors © CARTO"
       />
       <Marker position={position} />
       <LocationMarker

@@ -14,11 +14,6 @@ const AboutUsBlock: React.FC = () => {
         <li> Поддерживаем участки, теплицы, подоконники — в городе и за его пределами</li>
         <li> Данные пользователей хранятся безопасно и только для персональных рекомендаций</li>
       </ul>
-      <div className="mt-4">
-        <a href="/register" className="text-green-700 underline hover:text-green-900">
-          Присоединиться к нам →
-        </a>
-      </div>
     </section>
   )
 }

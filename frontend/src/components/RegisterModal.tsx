@@ -2,16 +2,17 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import Modal from './Modal';
 import API from '../api/axios';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { useAuth } from '../context/AuthContext';
 
 interface RegisterModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-
 const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
-  
+  const { isAuthenticated, loading } = useAuth();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -27,6 +28,9 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     });
   }, []);
 
+  //  Пока загружается авторизация — не показываем форму
+  if (loading || isAuthenticated) return null;
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -36,11 +40,21 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
       return;
     }
 
-    if (!executeRecaptcha) {
-      setError('Капча не готова');
-      return;
+    let captchaToken = null;
+
+    if (!isAuthenticated) {
+      if (!executeRecaptcha) {
+        setError('Капча не готова');
+        return;
+      }
+
+      try {
+        captchaToken = await executeRecaptcha('register');
+      } catch (err) {
+        setError('Ошибка выполнения капчи');
+        return;
+      }
     }
-    const captchaToken = await executeRecaptcha('register');
 
     try {
       await API.post(
@@ -61,7 +75,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <h2 className="text-2xl font-bold mb-6 text-center">📝 Регистрация</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">Регистрация</h2>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
         <input

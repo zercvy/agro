@@ -38,7 +38,7 @@ const LoginModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <h2 className="text-2xl font-bold mb-6 text-center">🔐 Вход</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">Вход</h2>
 
       <form className="space-y-4" onSubmit={handleLogin}>
         <input type="email" value={email} onChange={e => setEmail(e.target.value)} required className="w-full border p-2 rounded" placeholder="Email" />

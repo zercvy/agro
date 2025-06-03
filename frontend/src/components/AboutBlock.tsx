@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react';
+import RegisterModal from './RegisterModal';
 
 const AboutBlock: React.FC = () => {
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
   return (
     <section className="bg-white rounded-lg shadow p-6 my-6">
       <h2 className="text-xl font-semibold mb-4">💡 О проекте</h2>
@@ -12,15 +15,24 @@ const AboutBlock: React.FC = () => {
         <li> Подбор культур на основе реальных условий</li>
       </ul>
       <div className="mt-4 space-x-4">
-        <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+        <button
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          onClick={() => setIsRegisterOpen(true)}
+        >
           Начать пользоваться
         </button>
         <button className="underline text-green-600">
           Подробнее о проекте
         </button>
       </div>
-    </section>
-  )
-}
 
-export default AboutBlock
+      {/* Модалка регистрации */}
+      <RegisterModal
+        isOpen={isRegisterOpen}
+        onClose={() => setIsRegisterOpen(false)}
+      />
+    </section>
+  );
+};
+
+export default AboutBlock;

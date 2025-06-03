@@ -1,13 +1,17 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import Modal from './Modal';
 import API from '../api/axios';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 interface RegisterModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+
 const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,10 +36,16 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
       return;
     }
 
+    if (!executeRecaptcha) {
+      setError('Капча не готова');
+      return;
+    }
+    const captchaToken = await executeRecaptcha('register');
+
     try {
       await API.post(
         '/register',
-        { name, email, password },
+        { name, email, password, captchaToken },
         { headers: { 'X-CSRF-Token': csrfToken } }
       );
 

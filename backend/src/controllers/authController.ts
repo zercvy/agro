@@ -2,19 +2,42 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { db } from '../models/db';
+import axios from 'axios';
+
 
 const COOKIE_NAME = process.env.COOKIE_NAME!;
 const JWT_SECRET = process.env.JWT_SECRET!;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN!;
 
+// export const register = async (req: Request, res: Response) => {
+//   const { name, email, password } = req.body;
+
+//   const [users] = await db.query('SELECT id FROM users WHERE email = ?', [email]);
+//   if ((users as any[]).length > 0) return res.status(400).json({ message: 'Email уже используется' });
+
+//   const hashedPassword = await bcrypt.hash(password, 10);
+//   await db.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, hashedPassword]);
+
+//   res.status(201).json({ message: 'Пользователь зарегистрирован' });
+// };
+
 export const register = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, captchaToken } = req.body;
+
+  // 👉 Валидация reCAPTCHA
+  if (!captchaToken || !(await verifyRecaptcha(captchaToken))) {
+    return res.status(403).json({ message: 'Проверка капчи не пройдена' });
+  }
 
   const [users] = await db.query('SELECT id FROM users WHERE email = ?', [email]);
-  if ((users as any[]).length > 0) return res.status(400).json({ message: 'Email уже используется' });
+  if ((users as any[]).length > 0)
+    return res.status(400).json({ message: 'Email уже используется' });
 
   const hashedPassword = await bcrypt.hash(password, 10);
-  await db.query('INSERT INTO users (name, email, password) VALUES (?, ?, ?)', [name, email, hashedPassword]);
+  await db.query(
+    'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+    [name, email, hashedPassword]
+  );
 
   res.status(201).json({ message: 'Пользователь зарегистрирован' });
 };
@@ -52,3 +75,23 @@ export const getProfile = async (req: Request, res: Response) => {
   if (!req.user) return res.status(401).json({ message: 'Не авторизован' });
   res.json(req.user);
 };
+
+
+async function verifyRecaptcha(token: string): Promise<boolean> {
+  try {
+    const response = await axios.post(
+      'https://www.google.com/recaptcha/api/siteverify',
+      null,
+      {
+        params: {
+          secret: process.env.RECAPTCHA_SECRET!,
+          response: token,
+        },
+      }
+    );
+    return response.data.success && response.data.score > 0.5;
+  } catch (error) {
+    console.error('Ошибка проверки reCAPTCHA:', error);
+    return false;
+  }
+}

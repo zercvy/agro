@@ -10,13 +10,15 @@ export const createPlot = async (req: Request, res: Response) => {
   }
 
   try {
-    await db.query(
+    const [result] = await db.query(
       `INSERT INTO plots (user_id, name, type, coordinates, area, perimeter, soil_type)
-       VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      VALUES (?, ?, ?, ?, ?, ?, ?)`,
       [userId, name, type, JSON.stringify(coordinates), area, perimeter, soil_type]
     );
 
-    res.status(201).json({ message: 'Участок успешно создан' });
+    const insertId = (result as any).insertId;
+    res.status(201).json({ id: insertId });
+    // res.status(201).json({ message: 'Участок успешно создан' });
   } catch (err) {
     console.error('Ошибка создания участка:', err);
     res.status(500).json({ message: 'Ошибка сервера при создании участка' });
@@ -107,5 +109,31 @@ export const updatePlot = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Ошибка обновления участка:', err);
     res.status(500).json({ message: 'Ошибка при обновлении участка' });
+  }
+};
+export const getBarriersByPlot = async (req: Request, res: Response) => {
+  const plotId = req.params.id;
+  const userId = req.user?.id;
+
+  try {
+    // Проверка: участок принадлежит пользователю
+    const [rows] = await db.query('SELECT id FROM plots WHERE id = ? AND user_id = ?', [plotId, userId]);
+    if ((rows as any[]).length === 0) {
+      return res.status(403).json({ message: 'Нет доступа к этому участку' });
+    }
+
+    // Получаем преграды
+    const [barriers] = await db.query('SELECT * FROM barriers WHERE plot_id = ?', [plotId]);
+
+    // Парсим геометрию из строки
+    const parsedBarriers = (barriers as any[]).map((barrier) => ({
+      ...barrier,
+      geometry: JSON.parse(barrier.geometry),
+    }));
+
+    res.json(parsedBarriers);
+  } catch (err) {
+    console.error('Ошибка получения преград:', err);
+    res.status(500).json({ message: 'Ошибка при получении преград' });
   }
 };

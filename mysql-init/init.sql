@@ -33,14 +33,17 @@ CREATE TABLE IF NOT EXISTS windowsills (
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS barriers (
+CREATE TABLE barriers (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  windowsill_id INT NOT NULL,
-  type ENUM('building', 'tree'),
+  plot_id INT NOT NULL,
+  type ENUM('light', 'wind') NOT NULL,
   height FLOAT,
   distance FLOAT,
   width FLOAT,
-  FOREIGN KEY (windowsill_id) REFERENCES windowsills(id) ON DELETE CASCADE
+  description TEXT,
+  coordinates TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (plot_id) REFERENCES plots(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS pots (

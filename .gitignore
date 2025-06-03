@@ -1,47 +1,24 @@
-# === Node modules ===
-**/node_modules/
-
-# === Logs ===
+# Logs
+logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
+node_modules
+dist
+dist-ssr
+*.local
 
-# === System files ===
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
-Thumbs.db
-
-# === Editor directories ===
-.vscode/
-.idea/
-
-# === Build outputs ===
-dist/
-build/
-out/
-coverage/
-
-# === Vite/React cache ===
-frontend/.vite/
-frontend/.cache/
-
-# # === Docker ===
-# **/docker-compose.override.yml
-# **/.dockerignore
-
-# === TypeScript ===
-**/*.tsbuildinfo
-
-# === Vite/Metadata ===
-frontend/node_modules/.vite/
-frontend/node_modules/vite/deps/_metadata.json
-
-# # === MySQL init dump (если временное) ===
-# mysql-init/*.sql
-
-# === Misc ===
-*.swp
-*.swo
-*.bak
-*.tmp
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

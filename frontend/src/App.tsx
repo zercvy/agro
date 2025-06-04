@@ -16,7 +16,10 @@ import PlotListPage from './pages/PlotListPage'
 import PlotDetailsPage from './pages/PlotDetailsPage'
 import EditPlotPage from './pages/EditPlotPage';
 import PrivateRoute from './components/PrivateRoute'
-
+//  Admin
+import AdminRoute from './components/AdminRoute';
+import AdminDashboard from './pages/AdminDashboard';
+import AdminLogin from './pages/AdminLogin';
 const App: React.FC = () => {
   return (
     <Routes>
@@ -30,7 +33,8 @@ const App: React.FC = () => {
       <Route path="/analytics" element={<PrivateRoute><AnalyticsPage /></PrivateRoute>} />
       <Route path="/windowsills" element={<PrivateRoute><WindowsillPage /></PrivateRoute>} />
       <Route path="/plots/edit/:id" element={<PrivateRoute><EditPlotPage /></PrivateRoute>} />
-
+      <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+      <Route path="/admin/login" element={<AdminLogin />} />
       {/* 🟢 Открытые маршруты */}
       <Route path="/calendar" element={<CalendarPage />} />
       <Route path="/cultures" element={<CulturePage />} />

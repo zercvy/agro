@@ -1,6 +1,4 @@
 import cors from 'cors';
-
-
 import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
@@ -10,6 +8,7 @@ import plotRoutes from './routes/plotRoutes';
 import windowsillRoutes from './routes/windowsillRoutes'
 import potPlantRoutes from './routes/potPlantRoutes'
 import weatherRouter from './routes/weather';
+import adminRoutes from './routes/adminRoutes';
 dotenv.config();
 
 const app = express();
@@ -49,7 +48,12 @@ app.use('/api', authRoutes);
 app.use('/api/windowsills', windowsillRoutes)
 app.use('/api/pots', potPlantRoutes)
 app.use('/api/weather', weatherRouter);
+app.use('/api/admin', adminRoutes);
 
+app.use('/api/admin/login', csrfProtection);
+app.get('/api/admin/csrf-token', csrfProtection, (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
 
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);

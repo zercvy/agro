@@ -38,6 +38,7 @@ const CreateAdmin: React.FC = () => {
       <form onSubmit={handleSubmit} className="space-y-4 bg-white p-4 rounded shadow w-full max-w-md">
         <input
           type="email"
+          
           placeholder="Email администратора"
           value={email}
           onChange={(e) => setEmail(e.target.value)}

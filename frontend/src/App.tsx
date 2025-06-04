@@ -18,6 +18,7 @@ import AdminRoute from './components/admin/AdminRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminLogin from './pages/admin/AdminLogin';
 import CreateAdmin from './pages/admin/CreateAdmin';
+import AdminUsers from './pages/admin/AdminUsers';
 const App: React.FC = () => {
   return (
     <Routes>
@@ -34,7 +35,7 @@ const App: React.FC = () => {
       <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/create" element={<AdminRoute><CreateAdmin /></AdminRoute>} />
-
+      <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
       {/* 🟢 Открытые маршруты */}
       <Route path="/calendar" element={<CalendarPage />} />
       <Route path="/cultures" element={<CulturePage />} />

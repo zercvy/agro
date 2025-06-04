@@ -1,6 +1,3 @@
-
-
-
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 
@@ -17,9 +14,10 @@ import PlotDetailsPage from './pages/PlotDetailsPage'
 import EditPlotPage from './pages/EditPlotPage';
 import PrivateRoute from './components/PrivateRoute'
 //  Admin
-import AdminRoute from './components/AdminRoute';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminLogin from './pages/AdminLogin';
+import AdminRoute from './components/admin/AdminRoute';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminLogin from './pages/admin/AdminLogin';
+import CreateAdmin from './pages/admin/CreateAdmin';
 const App: React.FC = () => {
   return (
     <Routes>
@@ -35,6 +33,8 @@ const App: React.FC = () => {
       <Route path="/plots/edit/:id" element={<PrivateRoute><EditPlotPage /></PrivateRoute>} />
       <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
       <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin/create" element={<AdminRoute><CreateAdmin /></AdminRoute>} />
+
       {/* 🟢 Открытые маршруты */}
       <Route path="/calendar" element={<CalendarPage />} />
       <Route path="/cultures" element={<CulturePage />} />

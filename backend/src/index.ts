@@ -8,7 +8,7 @@ import plotRoutes from './routes/plotRoutes';
 import windowsillRoutes from './routes/windowsillRoutes'
 import potPlantRoutes from './routes/potPlantRoutes'
 import weatherRouter from './routes/weather';
-import adminRoutes from './routes/adminRoutes';
+import adminRoutes from './routes/admin/adminRoutes';
 dotenv.config();
 
 const app = express();

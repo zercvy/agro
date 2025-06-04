@@ -1,6 +1,6 @@
 import React, { useState, FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import API from '../api/axios';
+import API from '../../api/axios';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');

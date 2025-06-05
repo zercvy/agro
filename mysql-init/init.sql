@@ -1,56 +1,56 @@
-CREATE DATABASE IF NOT EXISTS agro_db;
-USE agro_db;
+-- CREATE DATABASE IF NOT EXISTS agro_db;
+-- USE agro_db;
 
-CREATE TABLE IF NOT EXISTS users (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
-  email VARCHAR(100) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL
-);
+-- CREATE TABLE IF NOT EXISTS users (
+--   id INT AUTO_INCREMENT PRIMARY KEY,
+--   name VARCHAR(100) NOT NULL,
+--   email VARCHAR(100) NOT NULL UNIQUE,
+--   password VARCHAR(255) NOT NULL
+-- );
 
-CREATE TABLE IF NOT EXISTS plots (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  name VARCHAR(100) NOT NULL,
-  type VARCHAR(50),
-  coordinates TEXT,
-  area FLOAT,
-  perimeter FLOAT,
-  soil_type VARCHAR(100),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  lightBarrier TEXT,
-  windBarrier TEXT,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
+-- CREATE TABLE IF NOT EXISTS plots (
+--   id INT AUTO_INCREMENT PRIMARY KEY,
+--   user_id INT NOT NULL,
+--   name VARCHAR(100) NOT NULL,
+--   type VARCHAR(50),
+--   coordinates TEXT,
+--   area FLOAT,
+--   perimeter FLOAT,
+--   soil_type VARCHAR(100),
+--   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--   lightBarrier TEXT,
+--   windBarrier TEXT,
+--   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+-- );
 
-CREATE TABLE IF NOT EXISTS windowsills (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  side VARCHAR(10),
-  floor INT,
-  has_lamp TINYINT(1),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
+-- CREATE TABLE IF NOT EXISTS windowsills (
+--   id INT AUTO_INCREMENT PRIMARY KEY,
+--   user_id INT NOT NULL,
+--   side VARCHAR(10),
+--   floor INT,
+--   has_lamp TINYINT(1),
+--   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+-- );
 
-CREATE TABLE barriers (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  plot_id INT NOT NULL,
-  type ENUM('light', 'wind') NOT NULL,
-  height FLOAT,
-  distance FLOAT,
-  width FLOAT,
-  description TEXT,
-  coordinates TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (plot_id) REFERENCES plots(id) ON DELETE CASCADE
-);
+-- CREATE TABLE barriers (
+--   id INT AUTO_INCREMENT PRIMARY KEY,
+--   plot_id INT NOT NULL,
+--   type ENUM('light', 'wind') NOT NULL,
+--   height FLOAT,
+--   distance FLOAT,
+--   width FLOAT,
+--   description TEXT,
+--   coordinates TEXT,
+--   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--   FOREIGN KEY (plot_id) REFERENCES plots(id) ON DELETE CASCADE
+-- );
 
-CREATE TABLE IF NOT EXISTS pots (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  windowsill_id INT NOT NULL,
-  volume FLOAT NOT NULL,
-  culture VARCHAR(100) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (windowsill_id) REFERENCES windowsills(id) ON DELETE CASCADE
-);
+-- CREATE TABLE IF NOT EXISTS pots (
+--   id INT AUTO_INCREMENT PRIMARY KEY,
+--   windowsill_id INT NOT NULL,
+--   volume FLOAT NOT NULL,
+--   culture VARCHAR(100) NOT NULL,
+--   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--   FOREIGN KEY (windowsill_id) REFERENCES windowsills(id) ON DELETE CASCADE
+-- );

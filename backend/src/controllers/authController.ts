@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { db } from '../models/db';
+import db from '../models/db';
 import axios from 'axios';
 import validator from 'validator';
 

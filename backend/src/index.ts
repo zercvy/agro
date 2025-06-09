@@ -13,6 +13,9 @@ import windowsillRoutes from './routes/windowsillRoutes';
 import potPlantRoutes from './routes/potPlantRoutes';
 import weatherRouter from './routes/weather';
 import adminRoutes from './routes/admin/adminRoutes';
+import userCultureRoutes from './routes/userCultureRoutes';
+import cultureRoutes from './routes/cultureRoutes';
+import userObjectRoutes from './routes/userObjectRoutes';
 
 
 import { authLimiter, generalLimiter } from './middleware/rateLimiter';
@@ -40,6 +43,11 @@ const csrfProtection = csrf({
     secure: false // ставь true на проде (https)
   }
 });
+
+ // === Все API: ===
+app.use('/api/cultures',       cultureRoutes);       // GET /api/cultures
+app.use('/api/user/cultures',  userCultureRoutes);  // GET|POST /api/user/cultures
+app.use('/api/user/objects', userObjectRoutes);
 
 // === Rate Limiting ===
 app.use('/api/register', authLimiter);

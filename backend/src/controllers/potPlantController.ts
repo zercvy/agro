@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { db } from '../models/db';
+import db  from '../models/db';
 import { createPotPlant } from '../controllers/potPlantController'
 
 export const createPotPlant = async (req: Request, res: Response) => {

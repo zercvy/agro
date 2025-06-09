@@ -1,3 +1,6 @@
+// components/QuickActions.tsx
+
+import { Component } from 'lucide-react'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -23,8 +26,8 @@ const QuickActions: React.FC<QuickActionsProps> = ({ onRecommendOpen }) => {
       <Link to="/windowsills" className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
         🪟 Подоконники
       </Link>
-      <Link to="/cultures" className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
-        🌱 Культуры
+      <Link to="/my-cultures" className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
+        🌱 Мои культуры
       </Link>
       <Link to="/fertilizer" className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700">
         🧪 Удобрения

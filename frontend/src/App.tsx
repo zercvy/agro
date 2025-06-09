@@ -13,6 +13,8 @@ import PlotListPage from './pages/PlotListPage'
 import PlotDetailsPage from './pages/PlotDetailsPage'
 import EditPlotPage from './pages/EditPlotPage';
 import PrivateRoute from './components/PrivateRoute'
+import MyCulturesPage from './pages/MyCulturesPage';
+
 //  Admin
 import AdminRoute from './components/admin/AdminRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -42,6 +44,7 @@ const App: React.FC = () => {
       {/* 🟢 Открытые маршруты */}
       <Route path="/calendar" element={<CalendarPage />} />
       <Route path="/cultures" element={<CulturePage />} />
+      <Route path="/my-cultures" element={<MyCulturesPage />} />
       <Route path="/fertilizer" element={<FertilizerPage />} />
 
     </Routes>

@@ -11,17 +11,6 @@ import 'leaflet/dist/leaflet.css';
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3'
 
-// ReactDOM.createRoot(document.getElementById('root')!).render(
-//   <React.StrictMode>
-//     <BrowserRouter>
-//       <AuthProvider>
-//         <App />
-//       </AuthProvider>
-//     </BrowserRouter>
-//   </React.StrictMode>
-// );
-
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   
 <GoogleReCaptchaProvider

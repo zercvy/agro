@@ -3,6 +3,8 @@ import Modal from './Modal';
 import API from '../api/axios';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { useAuth } from '../context/AuthContext';
+import DOMPurify from 'dompurify';
+import validator from 'validator';
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -28,14 +30,36 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     });
   }, []);
 
-  //  Пока загружается авторизация — не показываем форму
   if (loading || isAuthenticated) return null;
+
+  const isValidPassword = (pwd: string) =>
+    pwd.length >= 6 && /[a-zA-Zа-яА-Я]/.test(pwd) && /\d/.test(pwd);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
 
-    if (password !== rePassword) {
+    const cleanName = DOMPurify.sanitize(name.trim());
+    const cleanEmail = validator.normalizeEmail(email.trim()) || '';
+    const cleanPassword = DOMPurify.sanitize(password.trim());
+    const cleanRePassword = DOMPurify.sanitize(rePassword.trim());
+
+    if (!validator.isLength(cleanName, { min: 2 })) {
+      setError('Имя должно содержать минимум 2 символа');
+      return;
+    }
+
+    if (!validator.isEmail(cleanEmail)) {
+      setError('Некорректный email');
+      return;
+    }
+
+    if (!isValidPassword(cleanPassword)) {
+      setError('Пароль должен быть не менее 6 символов и содержать хотя бы одну букву и одну цифру');
+      return;
+    }
+
+    if (cleanPassword !== cleanRePassword) {
       setError('Пароли не совпадают');
       return;
     }
@@ -59,7 +83,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
     try {
       await API.post(
         '/register',
-        { name, email, password, captchaToken },
+        { name: cleanName, email: cleanEmail, password: cleanPassword, captchaToken },
         { headers: { 'X-CSRF-Token': csrfToken } }
       );
 

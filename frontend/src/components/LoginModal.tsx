@@ -1,6 +1,7 @@
 import React, { useState, FormEvent, useEffect } from 'react';
 import Modal from './Modal';
 import API from '../api/axios';
+import DOMPurify from 'dompurify'; // npm install dompurify
 
 interface Props {
   isOpen: boolean;
@@ -19,22 +20,43 @@ const LoginModal: React.FC<Props> = ({ isOpen, onClose }) => {
     });
   }, []);
 
-  const handleLogin = async (e: FormEvent) => {
-    e.preventDefault();
-    setError(null);
+  // const handleLogin = async (e: FormEvent) => {
+  //   e.preventDefault();
+  //   setError(null);
 
-    try {
-      await API.post(
-        '/login',
-        { email, password },
-        { headers: { 'X-CSRF-Token': csrfToken } }
-      );
-      onClose();
-      window.location.reload(); // или useNavigate
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Ошибка входа');
-    }
-  };
+  //   try {
+  //     await API.post(
+  //       '/login',
+  //       { email, password },
+  //       { headers: { 'X-CSRF-Token': csrfToken } }
+  //     );
+  //     onClose();
+  //     window.location.reload(); // или useNavigate
+  //   } catch (err: any) {
+  //     setError(err.response?.data?.message || 'Ошибка входа');
+  //   }
+  // };
+
+
+  const handleLogin = async (e: FormEvent) => {
+  e.preventDefault();
+  setError(null);
+
+  const cleanEmail = DOMPurify.sanitize(email.trim());
+  const cleanPassword = DOMPurify.sanitize(password.trim());
+
+  try {
+    await API.post(
+      '/login',
+      { email: cleanEmail, password: cleanPassword },
+      { headers: { 'X-CSRF-Token': csrfToken } }
+    );
+    onClose();
+    window.location.reload(); // или useNavigate
+  } catch (err: any) {
+    setError(err.response?.data?.message || 'Ошибка входа');
+  }
+};
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

@@ -74,6 +74,7 @@ services:
       - mysql
     volumes:
       - ./backend:/app
+      - ./models:/app/models
     working_dir: /app
     command: npm run dev
 

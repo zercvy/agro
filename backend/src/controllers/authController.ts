@@ -3,16 +3,28 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { db } from '../models/db';
 import axios from 'axios';
-
+import validator from 'validator';
 
 const COOKIE_NAME = process.env.COOKIE_NAME!;
 const JWT_SECRET = process.env.JWT_SECRET!;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN!;
 
 export const register = async (req: Request, res: Response) => {
-  const { name, email, password, captchaToken } = req.body;
+  let { name, email, password, captchaToken } = req.body;
 
-  // 👉 Валидация reCAPTCHA
+  // Очистка и валидация
+  name = validator.escape(name.trim());
+  email = validator.normalizeEmail(email);
+  password = password.trim();
+
+  if (!validator.isEmail(email || '')) {
+    return res.status(400).json({ message: 'Некорректный email' });
+  }
+
+  if (!validator.isLength(password, { min: 6 })) {
+    return res.status(400).json({ message: 'Пароль должен содержать не менее 6 символов' });
+  }
+
   if (!captchaToken || !(await verifyRecaptcha(captchaToken))) {
     return res.status(403).json({ message: 'Проверка капчи не пройдена' });
   }
@@ -31,7 +43,14 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
+
+  email = validator.normalizeEmail(email);
+  password = password.trim();
+
+  if (!validator.isEmail(email || '')) {
+    return res.status(400).json({ message: 'Некорректный email' });
+  }
 
   const [users] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
   const user = (users as any[])[0];
@@ -40,20 +59,23 @@ export const login = async (req: Request, res: Response) => {
   const match = await bcrypt.compare(password, user.password);
   if (!match) return res.status(400).json({ message: 'Неверный email или пароль' });
 
- const token = jwt.sign(
-  { id: user.id, name: user.name, email: user.email },
-  process.env.JWT_SECRET as string,
-  { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
-);
+  const token = jwt.sign(
+    { id: user.id, name: user.name, email: user.email },
+    JWT_SECRET,
+    { expiresIn: JWT_EXPIRES_IN || '1d' }
+  );
 
   res
     .cookie(COOKIE_NAME, token, {
       httpOnly: true,
       sameSite: 'strict',
-      secure: false // включи true на проде
+      secure: false // true на проде
     })
     .json({ message: 'Успешный вход' });
 };
+
+
+
 
 export const logout = async (req: Request, res: Response) => {
   res.clearCookie(COOKIE_NAME).json({ message: 'Выход выполнен' });

@@ -7,14 +7,14 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import csrf from 'csurf';
 
-import authRoutes from './routes/authRoutes';
-import plotRoutes from './routes/plotRoutes';
+import authRoutes from './routes/user/authRoutes';
+import plotRoutes from './routes/plot/plotRoutes';
 import windowsillRoutes from './routes/windowsillRoutes';
 import potPlantRoutes from './routes/potPlantRoutes';
 import weatherRouter from './routes/weather';
 import adminRoutes from './routes/admin/adminRoutes';
-import userCultureRoutes from './routes/userCultureRoutes';
-import cultureRoutes from './routes/cultureRoutes';
+import userCultureRoutes from './routes/culture/userCultureRoutes';
+import cultureRoutes from './routes/culture/cultureRoutes';
 import userObjectRoutes from './routes/userObjectRoutes';
 
 

@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { authMiddleware } from '../middleware/authMiddleware';
+import { authMiddleware } from '../../middleware/authMiddleware';
 import {
   getCultures,
   addCulture,
   deleteCulture,
   bindCulture
-} from '../controllers/userCultureController';
+} from '../../controllers/userCultureController';
 
 const router = Router();
 

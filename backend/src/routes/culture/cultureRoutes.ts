@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getAllCultures, getCultureTree, getCultureTreeByCategories } from '../controllers/cultureController'
+import { getAllCultures, getCultureTree, getCultureTreeByCategories } from '../../controllers/cultureController'
 
 const router = Router()
 

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import db from '../models/db';
+import db from '../../models/db';
 export const getWindowsills = async (req: Request, res: Response) => {
   const userId = req.user?.id
   const [rows] = await db.execute(

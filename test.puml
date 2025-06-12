@@ -1,0 +1,93 @@
+@startuml
+
+!define RECTANGLE class
+
+' Project structure
+package "AgroAssistant" {
+    package "Client (Frontend)" {
+        RECTANGLE "Header"
+        RECTANGLE "Footer"
+        RECTANGLE "Modal"
+        RECTANGLE "WeatherBlock"
+        RECTANGLE "CalendarWidget"
+        RECTANGLE "FullCalendarBlock"
+        RECTANGLE "DashboardStats"
+        RECTANGLE "QuickActions"
+        RECTANGLE "BasicFertilizerCalculator"
+        RECTANGLE "AdvancedFertilizerCalculator"
+        RECTANGLE "YieldChart"
+        RECTANGLE "SoilChart"
+        RECTANGLE "CropRotationList"
+        RECTANGLE "PlotCard"
+        RECTANGLE "PlotForm"
+        RECTANGLE "PlotInfoBlock"
+        RECTANGLE "PlotCropList"
+        RECTANGLE "PlotMap"
+        RECTANGLE "RegisterModal"
+        RECTANGLE "LoginModal"
+        RECTANGLE "WindowsillForm"
+        RECTANGLE "PotForm"
+        RECTANGLE "PotTable"
+        RECTANGLE "CultureTable"
+    }
+
+    package "Pages" {
+        RECTANGLE "Home"
+        RECTANGLE "Dashboard"
+        RECTANGLE "FertilizerPage"
+        RECTANGLE "CalendarPage"
+        RECTANGLE "AnalyticsPage"
+        RECTANGLE "PlotListPage"
+        RECTANGLE "PlotDetailsPage"
+        RECTANGLE "AddPlotPage"
+        RECTANGLE "EditPlotPage"
+        RECTANGLE "WindowsillPage"
+        RECTANGLE "CulturePage"
+    }
+
+    package "Backend (Server)" {
+        RECTANGLE "authController.ts"
+        RECTANGLE "adminManageController.ts"
+        RECTANGLE "adminStatsController.ts"
+        RECTANGLE "profileController.ts"
+        RECTANGLE "userController.ts"
+        RECTANGLE "createPlot.ts"
+        RECTANGLE "getUserPlots.ts"
+        RECTANGLE "getPlotById.ts"
+        RECTANGLE "updatePlot.ts"
+        RECTANGLE "deletePlot.ts"
+        RECTANGLE "getBarriers.ts"
+        RECTANGLE "authMiddleware.ts"
+        RECTANGLE "isAdminMiddleware.ts"
+        RECTANGLE "rateLimiter.ts"
+        RECTANGLE "db.ts"
+        RECTANGLE "plotRoutes.ts"
+        RECTANGLE "authRoutes.ts"
+        RECTANGLE "cultureRoutes.ts"
+        RECTANGLE "userCultureRoutes.ts"
+        RECTANGLE "adminRoutes.ts"
+        RECTANGLE "weather.ts"
+        RECTANGLE "windowsillRoutes.ts"
+        RECTANGLE "potPlantRoutes.ts"
+        RECTANGLE "userObjectRoutes.ts"
+        RECTANGLE "index.ts"
+        RECTANGLE "types.d.ts"
+        RECTANGLE ".env"
+    }
+
+    RECTANGLE "MySQL"
+}
+
+' Relations between components (vertical flow)
+"Client (Frontend)" -down-> "Pages"
+"Client (Frontend)" -down-> "App.tsx"
+"Client (Frontend)" -down-> "main.tsx"
+"Client (Frontend)" -down-> "index.css"
+
+"Backend (Server)" -down-> "authController.ts"
+"Backend (Server)" -down-> "createPlot.ts"
+"Backend (Server)" -down-> "db.ts"
+"Backend (Server)" -down-> "plotRoutes.ts"
+"Backend (Server)" -down-> "authRoutes.ts"
+
+@enduml

@@ -1,5 +1,3 @@
-
-
 import { Request, Response } from 'express';
 import db from '../../models/db';
 import bcrypt from 'bcrypt';

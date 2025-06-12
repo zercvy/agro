@@ -5,7 +5,7 @@ import csrf from 'csurf';
 
 import { loginAdmin } from '../../controllers/admin/authController';
 import { getAdminProfile } from '../../controllers/admin/profileController';
-import { getUserStats } from '../../controllers/admin/userController';
+// import { getUserStats } from '../../controllers/admin/userController';
 import { getAdminStats } from '../../controllers/admin/adminStatsController';
 import { createAdmin } from '../../controllers/admin/adminManageController';
 import userRoutes from './userRoutes';  // Импортируем роуты для пользователей

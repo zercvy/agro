@@ -20,24 +20,6 @@ const LoginModal: React.FC<Props> = ({ isOpen, onClose }) => {
     });
   }, []);
 
-  // const handleLogin = async (e: FormEvent) => {
-  //   e.preventDefault();
-  //   setError(null);
-
-  //   try {
-  //     await API.post(
-  //       '/login',
-  //       { email, password },
-  //       { headers: { 'X-CSRF-Token': csrfToken } }
-  //     );
-  //     onClose();
-  //     window.location.reload(); // или useNavigate
-  //   } catch (err: any) {
-  //     setError(err.response?.data?.message || 'Ошибка входа');
-  //   }
-  // };
-
-
   const handleLogin = async (e: FormEvent) => {
   e.preventDefault();
   setError(null);

@@ -22,7 +22,7 @@ import normsRoutes from './routes/normsRoutes'
 import soilRoutes from './routes/soilRoutes'
 import userRoutes from './routes/admin/userRoutes';// Подключаем роуты для пользователей
 import { authLimiter, generalLimiter } from './middleware/rateLimiter';
-
+import recommendationRoutes from './routes/recommendation/recommendationRoutes';
 dotenv.config();
 
 const app = express();
@@ -55,6 +55,7 @@ app.use('/api/organic-types', organicRoutes)
 app.use('/api/fertilizer-types', fertilizerRoutes)
 app.use('/api/nutrient-norms', normsRoutes)
 app.use('/api/soil-types', soilRoutes)
+app.use('/api/recommendations', recommendationRoutes); // POST /api/recommendations
 
 // === Rate Limiting ===
 app.use('/api/register', authLimiter);

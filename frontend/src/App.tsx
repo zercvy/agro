@@ -15,14 +15,14 @@ import EditPlotPage from './pages/EditPlotPage';
 import PrivateRoute from './components/PrivateRoute'
 import MyCulturesPage from './pages/MyCulturesPage';
 
-//  Admin
+// Admin
 import AdminRoute from './components/admin/AdminRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminLogin from './pages/admin/AdminLogin';
 import CreateAdmin from './pages/admin/CreateAdmin';
 import AdminUsers from './pages/admin/AdminUsers';
-
-
+import AdminEditPage from './pages/admin/AdminEditPage'; // Страница редактирования админа
+import UserEditPage from './pages/admin/UserEditPage'; // Страница редактирования пользователя
 
 const App: React.FC = () => {
   return (
@@ -37,16 +37,20 @@ const App: React.FC = () => {
       <Route path="/analytics" element={<PrivateRoute><AnalyticsPage /></PrivateRoute>} />
       <Route path="/windowsills" element={<PrivateRoute><WindowsillPage /></PrivateRoute>} />
       <Route path="/plots/edit/:id" element={<PrivateRoute><EditPlotPage /></PrivateRoute>} />
+      
+      {/* Admin routes */}
       <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
       <Route path="/admin/login" element={<AdminLogin />} />
       <Route path="/admin/create" element={<AdminRoute><CreateAdmin /></AdminRoute>} />
       <Route path="/admin/users" element={<AdminRoute><AdminUsers /></AdminRoute>} />
+      <Route path="/admin/users/:userId" element={<AdminRoute><UserEditPage /></AdminRoute>} />
+      <Route path="/admin/admins/:adminId" element={<AdminRoute><AdminEditPage /></AdminRoute>} />
+
       {/* 🟢 Открытые маршруты */}
       <Route path="/calendar" element={<CalendarPage />} />
       <Route path="/cultures" element={<CulturePage />} />
       <Route path="/my-cultures" element={<MyCulturesPage />} />
       <Route path="/fertilizer" element={<FertilizerPage />} />
-
     </Routes>
   )
 }

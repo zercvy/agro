@@ -20,7 +20,7 @@ import organicRoutes from './routes/organicRoutes'
 import fertilizerRoutes from './routes/fertilizerRoutes'
 import normsRoutes from './routes/normsRoutes'
 import soilRoutes from './routes/soilRoutes'
-
+import userRoutes from './routes/admin/userRoutes';// Подключаем роуты для пользователей
 import { authLimiter, generalLimiter } from './middleware/rateLimiter';
 
 dotenv.config();
@@ -84,7 +84,7 @@ app.use('/api/windowsills', windowsillRoutes);
 app.use('/api/pots', potPlantRoutes);
 app.use('/api/weather', weatherRouter);
 app.use('/api/admin', adminRoutes);
-
+app.use('/api/admin', userRoutes);
 
 
 app.listen(port, () => {

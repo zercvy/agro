@@ -1,47 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import API from '../../api/axios';
-
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  created_at: string;
-}
+import AdminUsersList from '../../components/admin/AdminUsersList';
+import AdminList from '../../components/admin/AdminList';
 
 const AdminUsers: React.FC = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<any[]>([]); // Состояние для пользователей
+  const [admins, setAdmins] = useState<any[]>([]); // Состояние для администраторов
 
   useEffect(() => {
-    API.get('/admin/users')
-      .then(res => setUsers(res.data.users))
+    API.get('/admin/users')  // Роут для получения пользователей
+      .then(res => {
+        setUsers(res.data.users); // Сохраняем пользователей
+      })
       .catch(err => console.error('Ошибка при получении пользователей', err));
+
+    API.get('/admin/admins')  // Роут для получения администраторов
+      .then(res => {
+        setAdmins(res.data.admins); // Сохраняем администраторов
+      })
+      .catch(err => console.error('Ошибка при получении администраторов', err));
   }, []);
 
   return (
     <div className="p-6 space-y-4">
-      <h2 className="text-2xl font-bold">👥 Пользователи системы</h2>
-      <div className="bg-white shadow rounded p-4">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b">
-              <th className="text-left py-2">#</th>
-              <th className="text-left py-2">Имя</th>
-              <th className="text-left py-2">Email</th>
-              <th className="text-left py-2">Дата регистрации</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user, i) => (
-              <tr key={user.id} className="border-b hover:bg-gray-50">
-                <td className="py-2">{i + 1}</td>
-                <td className="py-2">{user.name}</td>
-                <td className="py-2">{user.email}</td>
-                <td className="py-2">{new Date(user.created_at).toLocaleString()}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <AdminUsersList users={users} />  {/* Компонент для пользователей */}
+      <AdminList admins={admins} />     {/* Компонент для администраторов */}
     </div>
   );
 };

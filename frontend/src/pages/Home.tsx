@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../components/Header'
-import WeatherBlock from '../components/WeatherBlock'
+import WeatherBlock from '../components/weather/WeatherBlock'
 import AboutBlock from '../components/AboutBlock'
 import Footer from '../components/Footer'
 import AboutUsBlock from '../components/AboutUsBlock'

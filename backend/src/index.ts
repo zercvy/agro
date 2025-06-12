@@ -16,7 +16,10 @@ import adminRoutes from './routes/admin/adminRoutes';
 import userCultureRoutes from './routes/culture/userCultureRoutes';
 import cultureRoutes from './routes/culture/cultureRoutes';
 import userObjectRoutes from './routes/userObjectRoutes';
-
+import organicRoutes from './routes/organicRoutes'
+import fertilizerRoutes from './routes/fertilizerRoutes'
+import normsRoutes from './routes/normsRoutes'
+import soilRoutes from './routes/soilRoutes'
 
 import { authLimiter, generalLimiter } from './middleware/rateLimiter';
 
@@ -48,6 +51,10 @@ const csrfProtection = csrf({
 app.use('/api/cultures',       cultureRoutes);       // GET /api/cultures
 app.use('/api/user/cultures',  userCultureRoutes);  // GET|POST /api/user/cultures
 app.use('/api/user/objects', userObjectRoutes);
+app.use('/api/organic-types', organicRoutes)
+app.use('/api/fertilizer-types', fertilizerRoutes)
+app.use('/api/nutrient-norms', normsRoutes)
+app.use('/api/soil-types', soilRoutes)
 
 // === Rate Limiting ===
 app.use('/api/register', authLimiter);

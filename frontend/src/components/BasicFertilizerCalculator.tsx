@@ -1,3 +1,5 @@
+
+
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import API from '../api/axios'
 
@@ -113,11 +115,9 @@ const BasicFertilizerCalculator: React.FC = () => {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label>Площадь (га)</label>
-          <input type="range" name="area" min="0.1" max="100" step="0.1"
-            value={form.area} onChange={handleChange}/>
           <input type="number" name="area" step="0.1"
             value={form.area} onChange={handleChange}
-            className="w-full border p-1 rounded mt-1"/>
+            className="w-full border p-2 rounded mt-1"/>
         </div>
         <div>
           <label>Планируемый урожай (т/га)</label>
@@ -141,28 +141,10 @@ const BasicFertilizerCalculator: React.FC = () => {
           >
             <option value="">Выберите тип почвы</option>
             {soilTypes.map(s => (
-              <option key={s.id} value={String(s.id)}>
-                {s.name}
-              </option>
+              <option key={s.id} value={String(s.id)}>{s.name}</option>
             ))}
           </select>
         </div>
-        {/* pH ползунок */}
-        {soilTypes.find(s => String(s.id) === form.soilType) && (
-          <div className="mb-4">
-            <label className="block mb-1">Кислотность (pH): {form.ph}</label>
-            <input
-              type="range"
-              name="ph"
-              min={soilTypes.find(s => String(s.id) === form.soilType)!.ph_min}
-              max={soilTypes.find(s => String(s.id) === form.soilType)!.ph_max}
-              step="0.1"
-              value={form.ph}
-              onChange={handleChange}
-              className="w-full"
-            />
-          </div>
-        )}
         <div className="flex gap-2">
           <div className="flex-1">
             <label>Гумус (%)</label>
@@ -221,9 +203,6 @@ const BasicFertilizerCalculator: React.FC = () => {
 
       <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
         Рассчитать
-      </button>
-      <button type="button" onClick={() => setResult(null)} className="ml-2 px-4 py-2 border rounded">
-        Сброс
       </button>
 
       {result && (

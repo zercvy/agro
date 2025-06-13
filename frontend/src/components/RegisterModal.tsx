@@ -109,6 +109,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
           onChange={(e) => setName(e.target.value)}
           className="w-full border p-2 rounded"
           required
+          disabled={emailSent}
         />
 
         <input
@@ -118,6 +119,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
           onChange={(e) => setEmail(e.target.value)}
           className="w-full border p-2 rounded"
           required
+          disabled={emailSent}
         />
 
         <input
@@ -127,6 +129,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
           onChange={(e) => setPassword(e.target.value)}
           className="w-full border p-2 rounded"
           required
+          disabled={emailSent}
         />
 
         <input
@@ -136,6 +139,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
           onChange={(e) => setRePassword(e.target.value)}
           className="w-full border p-2 rounded"
           required
+          disabled={emailSent}
         />
 
         <label className="text-sm flex items-center space-x-2 mt-1">
@@ -147,14 +151,11 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
           <span>Показать пароли</span>
         </label>
 
-        <div className="bg-gray-100 border rounded p-3 text-center text-sm text-gray-600">
-          🛡 Подтверждение email пока не реализовано — вход сразу после регистрации
-        </div>
-
         {error && <p className="text-red-600 text-sm">{error}</p>}
 
         <button
           type="submit"
+          disabled={emailSent}
           className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700"
         >
           Зарегистрироваться
@@ -162,7 +163,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onClose }) => {
 
         {emailSent && (
           <div className="mt-6 text-sm text-green-700 bg-green-50 p-3 rounded text-center">
-            ✅ Регистрация успешна! Теперь войдите в аккаунт.
+            Пожалуйста, проверьте свою почту и перейдите по ссылке, чтобы завершить регистрацию.
           </div>
         )}
       </form>

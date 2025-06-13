@@ -16,9 +16,12 @@ import { register } from '../../controllers/auth/registerController';
 import { login } from '../../controllers/auth/loginController';
 import { logout, getProfile } from '../../controllers/auth/commonAuthController';
 import { authMiddleware } from '../../middleware/authMiddleware';
-
+import { confirmEmail } from '../../controllers/auth/confirmEmail';
 const router = Router();
 
+
+
+router.get('/verify', confirmEmail);
 router.post('/register', register);
 router.post('/login', login);
 router.post('/logout', logout);

@@ -14,7 +14,7 @@ import PlotDetailsPage from './pages/PlotDetailsPage'
 import EditPlotPage from './pages/EditPlotPage';
 import PrivateRoute from './components/PrivateRoute'
 import MyCulturesPage from './pages/MyCulturesPage';
-
+import VerifyPage from './pages/VerifyPage'
 // Admin
 import AdminRoute from './components/admin/AdminRoute';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -23,7 +23,7 @@ import CreateAdmin from './pages/admin/CreateAdmin';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminEditPage from './pages/admin/AdminEditPage'; // Страница редактирования админа
 import UserEditPage from './pages/admin/UserEditPage'; // Страница редактирования пользователя
-
+import Header from './components/Header';
 const App: React.FC = () => {
   return (
     <Routes>
@@ -46,11 +46,15 @@ const App: React.FC = () => {
       <Route path="/admin/users/:userId" element={<AdminRoute><UserEditPage /></AdminRoute>} />
       <Route path="/admin/admins/:adminId" element={<AdminRoute><AdminEditPage /></AdminRoute>} />
 
+
       {/* 🟢 Открытые маршруты */}
       <Route path="/calendar" element={<CalendarPage />} />
       <Route path="/cultures" element={<CulturePage />} />
       <Route path="/my-cultures" element={<MyCulturesPage />} />
       <Route path="/fertilizer" element={<FertilizerPage />} />
+
+      <Route path="/verify" element={<VerifyPage />} />
+
     </Routes>
   )
 }

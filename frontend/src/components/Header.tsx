@@ -17,7 +17,10 @@ const Header: React.FC = () => {
           <Link to="/" className="text-2xl font-bold text-green-600">🌱 Агроассистент</Link>
           <nav className="space-x-4 flex items-center">
             <Link to="/" className="text-gray-600 hover:text-green-600">Главная</Link>
-            <Link to="/dashboard" className="text-gray-600 hover:text-green-600">Кабинет</Link>
+
+            {isAuthenticated && (
+              <Link to="/dashboard" className="text-gray-600 hover:text-green-600">Кабинет</Link>
+            )}
 
             {!isAuthenticated ? (
               <>
@@ -37,7 +40,7 @@ const Header: React.FC = () => {
             ) : (
               <>
                 <span className="text-gray-700 font-medium">
-                  👋 Привет, {user?.name || 'Пользователь'}
+                   Привет, {user?.name || 'Пользователь'}
                 </span>
                 <button
                   onClick={async () => {
@@ -58,7 +61,7 @@ const Header: React.FC = () => {
         isOpen={showLogin}
         onClose={() => {
           setShowLogin(false);
-          checkAuth(); // после входа — обновляем шапку
+          checkAuth(); // обновление после входа
         }}
       />
       <RegisterModal

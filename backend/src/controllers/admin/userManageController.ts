@@ -17,7 +17,8 @@ export const getUserById = async (req: Request, res: Response) => {
 
     // Получаем информацию о связанных участках и горшках
     const [plots] = await db.query('SELECT id, name FROM plots WHERE user_id = ?', [id]);
-    const [pots] = await db.query('SELECT id, culture FROM pots WHERE windowsill_id IN (SELECT id FROM windowsills WHERE user_id = ?)', [id]);
+    const [pots] = await db.query('SELECT id, culture_id FROM pots WHERE windowsill_id IN (SELECT id FROM windowsills WHERE user_id = ?)', [id]);
+
 
     res.json({
       ...user,

@@ -3,12 +3,13 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import CalendarWidget from '../components/CalendarWidget'
 import FullCalendarBlock from '../components/FullCalendarBlock'
-
+import Breadcrumbs from '../components/Breadcrumbs';
 const CalendarPage: React.FC = () => {
   return (
     <>
       <Header />
       <main className="max-w-5xl mx-auto px-4 py-8">
+        <Breadcrumbs />
         <h2 className="text-2xl font-bold mb-6">📅 Календарь фермера</h2>
         <CalendarWidget hideLink />
         <FullCalendarBlock />

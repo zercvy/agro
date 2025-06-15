@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import API from '../api/axios';
 import PlotForm from '../components/PlotForm'; 
-
+import Breadcrumbs from '../components/Breadcrumbs';
 const EditPlotPage: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -60,6 +60,7 @@ const EditPlotPage: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6">
+      <Breadcrumbs />
       <h2 className="text-2xl font-bold mb-4">✏️ Редактирование участка</h2>
       <PlotForm isEdit initialData={initialData} onSubmit={handleUpdate} />
     </div>

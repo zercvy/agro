@@ -5,7 +5,7 @@ import PlotCropList from '../components/PlotCropList';
 import PlotInfoBlock from '../components/PlotInfoBlock';
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-
+import Breadcrumbs from '../components/Breadcrumbs';
 const PlotDetailsPage: React.FC = () => {
   const { id } = useParams();
   const [plot, setPlot] = useState<any>(null);
@@ -24,6 +24,7 @@ const PlotDetailsPage: React.FC = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <Breadcrumbs />
       <h2 className="text-2xl font-bold">{plot.name}</h2>
 
       <div className="h-[400px] w-full rounded border overflow-hidden">

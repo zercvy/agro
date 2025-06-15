@@ -8,7 +8,7 @@ import RecentActivity from '../components/RecentActivity'
 import ActiveCropsTable from '../components/ActiveCropsTable'
 import CropRecommendationModal from '../components/CropRecommendationModal'
 import CalendarWidget from '../components/CalendarWidget'
-
+import Breadcrumbs from '../components/Breadcrumbs';
 const Dashboard: React.FC = () => {
   const [showRecommend, setShowRecommend] = useState(false)
 
@@ -16,6 +16,7 @@ const Dashboard: React.FC = () => {
     <>
       <Header />
       <main className="max-w-5xl mx-auto px-4 py-8">
+        <Breadcrumbs />
         <h2 className="text-3xl font-bold mb-6">👤 Личный кабинет</h2>
 
         <DashboardStats />

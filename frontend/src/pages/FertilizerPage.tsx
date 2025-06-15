@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import BasicFertilizerCalculator from '../components/BasicFertilizerCalculator'
 import AdvancedFertilizerCalculator from '../components/AdvancedFertilizerCalculator'
-
+import Breadcrumbs from '../components/Breadcrumbs';
 const FertilizerPage: React.FC = () => {
   const [mode, setMode] = useState<'basic' | 'advanced'>('basic')
 
@@ -11,6 +11,7 @@ const FertilizerPage: React.FC = () => {
     <>
       <Header />
       <main className="max-w-4xl mx-auto px-4 py-8">
+        <Breadcrumbs />
         <h2 className="text-2xl font-bold mb-6">🧪 Калькулятор удобрений</h2>
 
         <div className="flex items-center gap-6 mb-6 text-sm">

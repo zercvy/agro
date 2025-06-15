@@ -6,12 +6,13 @@ import Footer from '../components/Footer'
 import AboutUsBlock from '../components/AboutUsBlock'
 import CalendarWidget from '../components/CalendarWidget'
 import BasicFertilizerCalculator from '../components/BasicFertilizerCalculator'
-
+import Breadcrumbs from '../components/Breadcrumbs';
 const Home: React.FC = () => {
   return (
     <>
       <Header />
       <main className="max-w-5xl mx-auto px-4 py-8">
+        
         <WeatherBlock />
         <CalendarWidget />
         <AboutBlock />

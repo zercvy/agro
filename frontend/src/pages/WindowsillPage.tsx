@@ -5,7 +5,7 @@ import WindowsillList from '../components/WindowsillList'
 import WindowsillForm from '../components/WindowsillForm'
 import PotForm from '../components/PotForm'
 import PotTable from '../components/PotTable'
-
+import Breadcrumbs from '../components/Breadcrumbs';
 const WindowsillPage: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null)
 
@@ -13,6 +13,7 @@ const WindowsillPage: React.FC = () => {
     <>
       <Header />
       <main className="max-w-4xl mx-auto px-4 py-8">
+        <Breadcrumbs />
         <h2 className="text-2xl font-bold mb-6">🪟 Подоконники и горшки</h2>
 
         <WindowsillList onSelect={setSelectedId} selectedId={selectedId} />

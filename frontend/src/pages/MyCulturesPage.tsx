@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import API from '../api/axios';
 import CultureSearchTree from '../components/CultureSearchTree';
-
+import Breadcrumbs from '../components/Breadcrumbs';
 interface Culture {
   id: number;
   name: string;
@@ -76,6 +76,7 @@ const MyCulturesPage: React.FC = () => {
     <>
       <Header />
       <main className="max-w-5xl mx-auto px-4 py-8 space-y-10">
+        <Breadcrumbs />
         <section>
           <h2 className="text-2xl font-bold mb-4">🌱 Мои культуры</h2>
           {loading ? (

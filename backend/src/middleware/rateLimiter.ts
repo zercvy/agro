@@ -4,7 +4,7 @@ export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 минут
   max: 10, // Макс. 10 запросов на IP
   message: {
-    message: 'Слишком много попыток с этого IP. Попробуйте позже.',
+    message: 'Слишком много попыток. Попробуйте через 15 минут.',
   },
   standardHeaders: true, // Отправляет info в заголовках
   legacyHeaders: false,

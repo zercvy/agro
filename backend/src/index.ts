@@ -61,6 +61,7 @@ app.use('/api/nutrient-norms', normsRoutes)
 app.use('/api/soil-types', soilRoutes)
 app.use('/api/recommendations', recommendationRoutes); // POST /api/recommendations
 app.use('/api/user', userObjectRoutes);
+// app.use('/api/user/recent', userObjectRoutes);
 // === Rate Limiting ===
 app.use('/api/register', authLimiter);
 app.use('/api/login', authLimiter);

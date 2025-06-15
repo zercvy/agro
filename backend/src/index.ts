@@ -15,7 +15,7 @@ import weatherRouter from './routes/weather';
 import adminRoutes from './routes/admin/adminRoutes';
 import userCultureRoutes from './routes/culture/userCultureRoutes';
 import cultureRoutes from './routes/culture/cultureRoutes';
-import userObjectRoutes from './routes/userObjectRoutes';
+import userObjectRoutes from './routes/user/userObjectRoutes';
 import organicRoutes from './routes/organicRoutes'
 import fertilizerRoutes from './routes/fertilizerRoutes'
 import normsRoutes from './routes/normsRoutes'
@@ -23,6 +23,9 @@ import soilRoutes from './routes/soilRoutes'
 import userRoutes from './routes/admin/userRoutes';// Подключаем роуты для пользователей
 import { authLimiter, generalLimiter } from './middleware/rateLimiter';
 import recommendationRoutes from './routes/recommendation/recommendationRoutes';
+// import { getUserStats } from './routes/user/userRoutes';
+
+// router.get('/stats', getUserStats);
 
 dotenv.config();
 
@@ -57,7 +60,7 @@ app.use('/api/fertilizer-types', fertilizerRoutes)
 app.use('/api/nutrient-norms', normsRoutes)
 app.use('/api/soil-types', soilRoutes)
 app.use('/api/recommendations', recommendationRoutes); // POST /api/recommendations
-
+app.use('/api/user', userObjectRoutes);
 // === Rate Limiting ===
 app.use('/api/register', authLimiter);
 app.use('/api/login', authLimiter);
@@ -87,7 +90,7 @@ app.use('/api/pots', potPlantRoutes);
 app.use('/api/weather', weatherRouter);
 app.use('/api/admin', adminRoutes);
 app.use('/api/admin', userRoutes);
-
+app.use('/api/user', userRoutes);
 
 app.listen(port, () => {
   console.log(`🚀 Server running on http://localhost:${port}`);
